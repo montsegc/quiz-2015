@@ -15,8 +15,15 @@ exports.load = function(req, res, next, quizId){
 };
 
 //GET /quizes
-exports.index = function(req, res) {
-	models.Quiz.findAll().then(
+exports.index = function(req, res, next) {
+	var busqueda = '%';
+	if (req.query.search) {
+		busqueda = '%'+req.query.search.replace(' ','%')+'%';
+	}
+	models.Quiz.findAll({
+		where: ["pregunta LIKE ?",busqueda] 
+		,order: [['pregunta', 'ASC']]
+	}).then(
 		function(quizes) {
 			res.render('quizes/index', {quizes: quizes});
 		}
@@ -30,9 +37,9 @@ exports.show = function(req, res) {
 
 //GET /quizes/:quizId(\\d+)/answer
 exports.answer = function(req, res) {
-	var resultado = 'incorrecto';
-	if (req.query.respuesta.toUpperCase() === req.quiz.respuesta.toUpperCase()) {
-		resultado= 'corrrecto';
+	var resultado = 'Incorrecto';
+	if (req.query.respuesta && req.query.respuesta.toUpperCase() === req.quiz.respuesta.toUpperCase()) {
+		resultado= 'Corrrecto';
 	}
 	res.render('quizes/answer', {quiz: req.quiz, respuesta: resultado});
 }
