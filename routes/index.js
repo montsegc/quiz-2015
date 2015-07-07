@@ -12,11 +12,13 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load);
 
 // rutas /quizes
-router.get('/quizes/:quizId(\\d+)', quizController.show);
-router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
-router.get('/quizes', quizController.index);
-router.get('/author', quizController.author);
-router.get('/quizes/new',quizController.new);
-router.post('/quizes/create',quizController.create);
+router.get('/quizes', 						quizController.index);
+router.get('/quizes/:quizId(\\d+)', 		quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer', 	quizController.answer);
+router.get('/quizes/new',					quizController.new);
+router.post('/quizes/create',				quizController.create);
+router.get('/quizes/:quizId(\\d+)/edit',	quizController.edit);
+router.put('/quizes/:quizId(\\d+)',			quizController.update);
+router.get('/author', 						quizController.author);
 
 module.exports = router;
