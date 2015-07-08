@@ -36,9 +36,9 @@ sequelize.sync().then(function() {
 		if (count===0){
 			Quiz.bulkCreate( 
               	[ 
-              	{ pregunta: 'Capital de Italia', respuesta: 'Roma' }
-				,{ pregunta: 'Capital de Portugal', respuesta: 'Lisboa' }
-				,{ pregunta: 'Capital de Francia', respuesta: 'Paris' } 
+              	{ pregunta: 'Capital de Italia', respuesta: 'Roma', tipo: 'ciencia' }
+				,{ pregunta: 'Capital de Portugal', respuesta: 'Lisboa', tipo: 'ocio' }
+				,{ pregunta: 'Capital de Francia', respuesta: 'Paris', tipo: 'ciencia' } 
 				]
 			);
 		};
