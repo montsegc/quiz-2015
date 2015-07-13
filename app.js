@@ -8,6 +8,7 @@ var routes = require('./routes/index');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var sessionController = require('./controllers/session_controller');
 
 var app = express();
 
@@ -40,10 +41,25 @@ app.use(function(req,res,next) {
 
 });
 
+//auto-logout
+app.use(function(req,res,next) {
+
+  if(req.session.ultimoAcceso) {
+    var sg = 4;
+    if ((new Date().getTime() - (sg*1000)) > req.session.ultimoAcceso) {
+      sessionController.delete(req,res);
+    }
+  }
+  req.session.ultimoAcceso = new Date().getTime();
+  next();
+
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log('---Not Found');
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
