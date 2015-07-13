@@ -43,3 +43,11 @@ exports.destroy = function(req, res) {
 	delete req.session.user;
 	res.redirect(req.session.redir.toString());
 }
+
+//delete session
+exports.delete = function(req, res) {
+	if (req.session.user) {
+		delete req.session.user;
+		req.session.redir = '/';
+	}
+}
